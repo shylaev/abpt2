@@ -1,0 +1,23 @@
+---
+- name: check service status
+  hosts: one
+  user: ansible
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: Create user, if it doesnt exist yet
+    user:
+      name: "{{ item.name }}"
+      home: "{{ item.home }}"
+      comment: "{{ item.mail }}"
+      password: "{{ item.name | password_hash('sha512') }}"
+      update_password: on_create
+      state: present
+    with_items:
+      - { name: 'alice', home: '/home/testers/a.cooper', mail: 'alice.cooper@example.com' }
+      - { name: 'bob', home: '/home/testers/r.n.marley', mail: 'bob.marley@example.com' }
+      - { name: 'carol', home: '/home/testers/c.albert', mail: 'carol.albert@example.com' }
+
+...
