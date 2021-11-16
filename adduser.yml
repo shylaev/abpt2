@@ -1,6 +1,6 @@
 ---
 - name: check service status
-  hosts: one
+  hosts: all
   user: ansible
   become: yes
   become_method: sudo
